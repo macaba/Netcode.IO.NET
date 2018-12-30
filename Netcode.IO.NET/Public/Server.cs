@@ -172,8 +172,9 @@ namespace NetcodeIO.NET
 
 		private ISocketContext listenSocket;
 		private IPEndPoint listenEndpoint;
+        private IPEndPoint externalEndpoint;
 
-		private bool isRunning = false;
+        private bool isRunning = false;
 
 		private ulong protocolID;
 
@@ -196,10 +197,15 @@ namespace NetcodeIO.NET
 
 		private bool disposed = false;
 
-		#endregion
+        #endregion
 
-		public Server(int maxSlots, string address, int port, ulong protocolID, byte[] privateKey)
-		{
+        public Server(int maxSlots, string address, int port, ulong protocolID, byte[] privateKey) :
+            this(maxSlots, address, address, port, protocolID, privateKey)
+        {
+        }
+
+        public Server(int maxSlots, string address, string externalAddress, int port, ulong protocolID, byte[] privateKey)
+        {
 			this.tickrate = 60;
 
 			this.maxSlots = maxSlots;
@@ -211,8 +217,9 @@ namespace NetcodeIO.NET
 			this.encryptionManager = new EncryptionManager(maxSlots);
 
 			this.listenEndpoint = new IPEndPoint(IPAddress.Parse(address), port);
+            this.externalEndpoint = new IPEndPoint(IPAddress.Parse(externalAddress), port);
 
-			if (this.listenEndpoint.AddressFamily == AddressFamily.InterNetwork)
+            if (this.listenEndpoint.AddressFamily == AddressFamily.InterNetwork)
 				this.listenSocket = new UDPSocketContext(AddressFamily.InterNetwork);
 			else
 				this.listenSocket = new UDPSocketContext(AddressFamily.InterNetworkV6);
@@ -698,9 +705,9 @@ namespace NetcodeIO.NET
 				return;
 			}
 
-			// if this server's public IP is not in the list of endpoints, packet is not valid
-			bool serverAddressInEndpoints = privateConnectToken.ConnectServers.Any(x => x.Endpoint.CompareEndpoint(this.listenEndpoint, this.Port));
-			if (!serverAddressInEndpoints)
+            // if this server's public IP is not in the list of endpoints, packet is not valid
+            bool serverAddressInEndpoints = privateConnectToken.ConnectServers.Any(x => x.Endpoint.CompareEndpoint(this.externalEndpoint, this.Port));
+            if (!serverAddressInEndpoints)
 			{
 				log("Server address not listen in token", NetcodeLogLevel.Debug);
 				return;
