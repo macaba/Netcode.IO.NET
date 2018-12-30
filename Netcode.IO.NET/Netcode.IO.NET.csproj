@@ -55,6 +55,7 @@
     <Compile Include="Public\Tests.cs" />
     <Compile Include="Public\TokenFactory.cs" />
     <Compile Include="Utils\BufferPool.cs" />
+    <Compile Include="Utils\CryptoUtils.cs" />
     <Compile Include="Utils\DateTimeEx.cs" />
     <Compile Include="Utils\IO\ByteArrayReader.cs" />
     <Compile Include="Utils\IO\ByteStream.cs" />
@@ -63,15 +64,10 @@
     <Compile Include="Utils\LockFreeQueue.cs" />
     <Compile Include="Utils\MiscUtils.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BCCrypto\BCCrypto.csproj">
-      <Project>{d7022bc7-e21d-4a79-bde7-30f01ed961df}</Project>
-      <Name>BCCrypto</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent></PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

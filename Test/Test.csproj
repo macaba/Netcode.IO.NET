@@ -52,10 +52,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BCCrypto\BCCrypto.csproj">
-      <Project>{d7022bc7-e21d-4a79-bde7-30f01ed961df}</Project>
-      <Name>BCCrypto</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Netcode.IO.NET\Netcode.IO.NET.csproj">
       <Project>{74122cf9-7e4c-4ea7-9aec-fc1501bc712a}</Project>
       <Name>Netcode.IO.NET</Name>
